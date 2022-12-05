@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateScore()
     {
-        score += 10;
+        score += 1;
         GameManager.Instance.UpdateScore(score);
     }
 

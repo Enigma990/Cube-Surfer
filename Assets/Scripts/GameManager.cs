@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
-    [SerializeField] private Text scoreText = null;
+    [SerializeField] private TMP_Text scoreText = null;
 
-    [SerializeField] private GameObject pausePanel = null;
-    [SerializeField] private GameObject gamePanel = null;
-    [SerializeField] private GameObject completePanel = null;
-    [SerializeField] private GameObject failPanel = null;
 
     private void Awake()
     {
         instance = this;
+
+        Time.timeScale = 0f;
     }
 
     public void UpdateScore(int _score)
@@ -30,45 +29,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
 
-        completePanel.SetActive(true);
-        gamePanel.SetActive(false);
+        MainMenu.instance.LevelComplete();
+
     }
 
     public void LevelFailed()
     {
         Time.timeScale = 0f;
 
-        failPanel.SetActive(true);
-        gamePanel.SetActive(failPanel);
+        MainMenu.instance.LevelFailed();
     }
 
-    public void OnClick_PauseBtn()
-    {
-        Time.timeScale = 0f;
-
-        pausePanel.SetActive(true);
-        gamePanel.SetActive(false);
-    }
-
-    public void OnClick_ResumeBtn()
-    {
-        Time.timeScale = 1f;
-
-        pausePanel.SetActive(false);
-        gamePanel.SetActive(true);
-    }
-
-    public void OnClick_RestartBtn()
-    {
-        Time.timeScale = 1f;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void OnClick_MainMenu()
-    {
-        Time.timeScale = 1f;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    }
 }
